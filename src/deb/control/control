@@ -1,0 +1,7 @@
+Package: solr
+Version: [[version]]
+Section: misc
+Priority: low
+Architecture: all
+Description: Apache Solr
+Maintainer: andrew@brekka.org
