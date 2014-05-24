@@ -1,9 +1,33 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.brekka</groupId>
+    <parent>
+        <groupId>org.brekka</groupId>
+        <artifactId>root</artifactId>
+        <version>1.1</version>
+    </parent>
+    
+    <description>
+        Custom DEB archive for Apache Solr. Currently just a repackaging of the standard distribution, placed under '/usr/share/solr4'.
+    </description>
+    
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    
     <artifactId>solr-deb</artifactId>
-    <version>4.3.0</version>
+    <version>4.8.1-SNAPSHOT</version>
+
+    
+    <properties>
+        <solr.version>4.8.1</solr.version>
+        <dist.dir>${project.build.directory}/solr-dist</dist.dir>
+        <target.usr>/usr/share/solr4</target.usr>
+        <package_name>brekka-solr4</package_name>
+    </properties>
 
     <build>
         <plugins>
@@ -23,7 +47,7 @@
                                 <artifactItem>
                                     <groupId>org.apache.solr</groupId>
                                     <artifactId>solr</artifactId>
-                                    <version>${project.version}</version>
+                                    <version>${solr.version}</version>
                                     <type>zip</type>
                                     <overWrite>false</overWrite>
                                     <outputDirectory>${dist.dir}</outputDirectory>
@@ -50,7 +74,7 @@
                             <deb>[[buildDir]]/solr_[[version]]_all.[[extension]]</deb>
                             <dataSet>
                                 <data>
-                                    <src>${dist.dir}/solr-${project.version}/dist/solr-${project.version}.war</src>
+                                    <src>${dist.dir}/solr-${solr.version}/dist/solr-${solr.version}.war</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
@@ -60,7 +84,13 @@
                                     </mapper>
                                 </data>
                                 <data>
-                                    <src>${dist.dir}/solr-${project.version}/example/solr/solr.xml</src>
+                                    <type>link</type>
+                                    <symlink>true</symlink>
+                                    <linkName>${target.usr}/solr.war</linkName>
+                                    <linkTarget>${target.usr}/solr-${solr.version}.war</linkTarget>
+                                </data>
+                                <data>
+                                    <src>${dist.dir}/solr-${solr.version}/example/solr/solr.xml</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
@@ -70,7 +100,7 @@
                                     </mapper>
                                 </data>
                                 <data>
-                                    <src>${dist.dir}/solr-${project.version}/example/solr/collection1</src>
+                                    <src>${dist.dir}/solr-${solr.version}/example/solr/collection1</src>
                                     <type>directory</type>
                                     <mapper>
                                         <type>perm</type>
@@ -80,7 +110,7 @@
                                     </mapper>
                                 </data>
                                 <data>
-                                    <src>${dist.dir}/solr-${project.version}/licenses</src>
+                                    <src>${dist.dir}/solr-${solr.version}/licenses</src>
                                     <type>directory</type>
                                     <mapper>
                                         <type>perm</type>
@@ -90,7 +120,7 @@
                                     </mapper>
                                 </data>
                                 <data>
-                                    <src>${dist.dir}/solr-${project.version}/LICENSE.txt</src>
+                                    <src>${dist.dir}/solr-${solr.version}/LICENSE.txt</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
@@ -100,7 +130,7 @@
                                     </mapper>
                                 </data>
                                 <data>
-                                    <src>${dist.dir}/solr-${project.version}/README.txt</src>
+                                    <src>${dist.dir}/solr-${solr.version}/README.txt</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
@@ -110,7 +140,7 @@
                                     </mapper>
                                 </data>
                                 <data>
-                                    <src>${dist.dir}/solr-${project.version}/NOTICE.txt</src>
+                                    <src>${dist.dir}/solr-${solr.version}/NOTICE.txt</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
@@ -157,16 +187,11 @@
             </plugins>
         </pluginManagement>
     </build>
-    <properties>
-        <dist.dir>${project.build.directory}/solr-dist</dist.dir>
-        <target.usr>/usr/share/solr</target.usr>
-    </properties>
-    
-    <distributionManagement>
-        <repository>
-            <id>brekka</id>
-            <name>brekka-releases</name>
-            <url>http://maven.brekka.co.uk/artifactory/libs-release-local</url>
-        </repository>
-    </distributionManagement>
+
+    <scm>
+        <url>https://github.com/brekka/solr-deb.git</url>
+        <connection>https://github.com/brekka/solr-deb.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/brekka/solr-deb.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
 </project>
