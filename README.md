@@ -4,10 +4,13 @@ Brekka Solr DEB
 Overview
 --------
 
-Repackages the standard Apache Solr zip distribution into a DEB archive for 
+Repackages the WAR from the standard Apache Solr zip distribution into a DEB archive for 
 easy installation on Debian based Linux distributions. Currently this is very basic,
 simply copying the files to the /usr/share/solr4 directory. You will need to setup
 a web application container such as Jetty or Tomcat manually.
+
+*Important*: this package includes only the minimum of example files and currently does 
+not include any of the plugin JARs.
 
 
 Releases
