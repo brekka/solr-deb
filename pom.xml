@@ -19,7 +19,7 @@
     </licenses>
     
     <artifactId>solr-deb</artifactId>
-    <version>4.8.1-SNAPSHOT</version>
+    <version>4.8.1</version>
 
     
     <properties>
@@ -192,6 +192,6 @@
         <url>https://github.com/brekka/solr-deb.git</url>
         <connection>https://github.com/brekka/solr-deb.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/brekka/solr-deb.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v4.8.1</tag>
     </scm>
 </project>
